@@ -1,5 +1,5 @@
 .DS_Store
-outout/
+output/
 !output/.gitkeep
 
 # Byte-compiled / optimized / DLL files
