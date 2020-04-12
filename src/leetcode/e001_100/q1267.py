@@ -1,7 +1,11 @@
+"""
+Q1267
+"""
+
 from manimlib.imports import *
 from itertools import chain
 
-class E02Scene(Scene):
+class BasicScene(Scene):
     def disp_input(self, server):
         # create rectangles and numbers
         rect_list2d, text_list2d = [], []
@@ -26,7 +30,7 @@ class E02Scene(Scene):
                     self.play(text_vg[idx].set_color, BLUE)
         return rect_vg, text_vg
 
-class Problem(E02Scene):
+class Problem(BasicScene):
 
     def construct(self):
         server = [[1,1,0,0],[0,0,1,0],[0,0,1,0],[0,0,0,1]]
@@ -57,7 +61,7 @@ class Problem(E02Scene):
             ret = new_ret
 
 
-class Solution01(E02Scene):
+class Solution01(BasicScene):
 
     def construct(self):
         server = [[1,1,0,0],[0,0,1,0],[0,0,1,0],[0,0,0,1]]

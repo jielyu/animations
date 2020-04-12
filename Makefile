@@ -3,34 +3,42 @@ XX=manim
 ARGS=-pl
 #ARGS=-t --high_quality
 
-all: e03_problem
+all: q1262 q1267 q1282
 	@echo "create all animations completely"
 
-e01_file=src/s01/groupsize.py
-e01: e01_problem e01_solution01 e01_solution02
-	@echo "create e01 animations finished"
-e01_problem:
-	${XX} ${e01_file} Problem ${ARGS}
-e01_solution01:
-	${XX} ${e01_file} Solution01 ${ARGS}
-e01_solution02:
-	${XX} ${e01_file} Solution02 ${ARGS}
+# For Problem 1262 in Leetcode
+q1262_file=src/leetcode/e001_100/q1262.py
+q1262: q1262p q1262s1
+	@echo "create q1262 animations finished"
+q1262p:
+	${XX} ${q1262_file} Problem ${ARGS}
+q1262s1:
+	${XX} ${q1262_file} Solution01 ${ARGS}
 
-e02_file=src/s01/server.py
-e02: e02_problem e02_solution01
-	@echo "create e02 animations finished"
-e02_problem:
-	${XX} ${e02_file} Problem ${ARGS}
-e02_solution01:
-	${XX} ${e02_file} Solution01 ${ARGS}
+# For Problem 1267 in Leetcode
+q1267_file=src/leetcode/e001_100/q1267.py
+q1267: q1267p q1267s1
+	@echo "create q1267 animations finished"
+q1267p:
+	${XX} ${q1267_file} Problem ${ARGS}
+q1267s1:
+	${XX} ${q1267_file} Solution01 ${ARGS}
 
-e03_file=src/s01/divide_3.py
-e03: e03_problem e03_solution01
-	@echo "create e03 animations finished"
-e03_problem:
-	${XX} ${e03_file} Problem ${ARGS}
-e03_solution01:
-	${XX} ${e03_file} Solution01 ${ARGS}
+# For Problem 1222 in Leetcode
+q1282_file=src/leetcode/e001_100/q1282.py
+q1282: q1282e1 q1282e2 q1282s1 q1282s2
+	@echo "create q1282 animations finished"
+q1282o:
+	${XX} ${q1282_file} Opening ${ARGS}
+q1282e1:
+	${XX} ${q1282_file} Example01 ${ARGS} -n 51
+q1282e2:
+	${XX} ${q1282_file} Example02 ${ARGS}
+q1282s1:
+	${XX} ${q1282_file} Solution01 ${ARGS}
+q1282s2:
+	${XX} ${q1282_file} Solution02 ${ARGS}
+
 
 # clean all output
 clean:

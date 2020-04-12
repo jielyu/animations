@@ -1,7 +1,7 @@
 from manimlib.imports import *
 from itertools import chain
 
-class E03Scene(GraphScene):
+class BasicScene(GraphScene):
     CONFIG = {
         'x_min': -2,
         'x_max': 5,
@@ -67,13 +67,13 @@ class E03Scene(GraphScene):
         return axes, dot_list, arrow_paths, result
 
 
-class Problem(E03Scene):
+class Problem(BasicScene):
     def construct(self):
         pts = [[1,1],[3,4],[-1,0]]
         paths = [[1,1], [2,2], [3,3], [3,4], [2,3], [1,2], [0, 1], [-1, 0]]
         self.disp_example(pts, paths, False)
 
-class Solution01(E03Scene):
+class Solution01(BasicScene):
 
     def disp_path_x(self, start, end, mark_len, offsize, text_offsize, mark_color=RED):
         arrow = DoubleArrow(self.coords_to_point(*start), self.coords_to_point(*end))
