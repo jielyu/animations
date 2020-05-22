@@ -39,6 +39,26 @@ q1282s1:
 q1282s2:
 	${XX} ${q1282_file} Solution02 ${ARGS}
 
+# For manim demos
+manim_demo: position latex_color shape coordinate animation
+	@echo "create manim demo animations finished"
+
+position_file="src/manim_demo/basic/position.py"
+position:
+	manim ${position_file} PositionDemo ${ARGS}
+latex_color_file="src/manim_demo/basic/latex_color.py"
+latex_color:
+	manim ${latex_color_file} LatexDemo ${ARGS}
+shape_file="src/manim_demo/basic/shape.py"
+shape:
+	manim ${shape_file} ShapeDemo ${ARGS}
+	manim ${shape_file} Shape3DDemo ${ARGS}
+coordinate_file="src/manim_demo/basic/coordinate.py"
+coordinate:
+	manim ${coordinate_file} CoorDemo ${ARGS}
+animation_file="src/manim_demo/basic/animation.py"
+animation:
+	manim ${animation_file} EffectDemo ${ARGS}
 
 # clean all output
 clean:
