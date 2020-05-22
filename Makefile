@@ -25,8 +25,8 @@ q1267s1:
 	${XX} ${q1267_file} Solution01 ${ARGS}
 
 # For Problem 1222 in Leetcode
-q1282_file=src/leetcode/e001_100/q1282.py
-q1282: q1282e1 q1282e2 q1282s1 q1282s2
+q1282_file=src/leetcode/start/q1282.py
+q1282: q1282o q1282p q1282s q1282sopt
 	@echo "create q1282 animations finished"
 q1282o:
 	${XX} ${q1282_file} Opening ${ARGS}
@@ -38,6 +38,12 @@ q1282s1:
 	${XX} ${q1282_file} Solution01 ${ARGS}
 q1282s2:
 	${XX} ${q1282_file} Solution02 ${ARGS}
+q1282p:
+	${XX} ${q1282_file} Problem ${ARGS}
+q1282s:
+	${XX} ${q1282_file} Solution ${ARGS}
+q1282sopt:
+	${XX} ${q1282_file} SolutionOpt ${ARGS}
 
 # For manim demos
 manim_demo: position latex_color shape coordinate animation

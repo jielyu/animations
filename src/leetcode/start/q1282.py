@@ -81,7 +81,7 @@ class Opening(BasicScene):
 
     def construct(self):
         # display title
-        title = TextMobject('Q1282', '将人们按给定组的大小归为同一组')
+        title = TextMobject('Q1282', '将人员分配到指定大小的群')
         self.play(Write(title))
         self.wait()
 
@@ -285,4 +285,249 @@ class Solution02(BasicScene):
             num_text.move_to(end_point + 3.5*RIGHT)
             self.play(Write(num_text))
 
-            
+
+def create_peole(idx, color=RED):
+    p = ImageMobject('assets/leetcode/start/people.png')
+    i = TextMobject(str(idx), color=RED)
+    i.move_to(p.get_center() + 0.6*DOWN+0.3*LEFT)
+    people = Group(p, i)
+    return people
+
+
+class Problem(Scene):
+    """用于生成描述问题的动画
+    """
+    def construct(self):
+        groupsize = [3,3,3,3,3,1,3]
+        # group_id = [[5],[0,1,2],[3,4,6]]
+        
+        # 创建人物并标号
+        persons = self.create_persons(groupsize)
+
+        # 分群
+        group_id = [[5],[0,1,2],[3,4,6]]
+        self.play(persons[5].move_to, DOWN + 5*LEFT)
+        c1 = Circle(radius=5, color=YELLOW)
+        self.play(c1.move_to, persons[5].get_center()+LEFT*0.2, c1.scale, 0.3)
+        self.play(persons[0].move_to, 0.5*LEFT+DOWN + UL*1.3)
+        self.play(persons[1].move_to, 0.5*LEFT+DOWN + UR*1.3)
+        self.play(persons[2].move_to, 0.5*LEFT+DOWN + 1.5*DOWN)
+        c2 = Circle(radius=5)
+        self.play(c2.move_to, DOWN+LEFT*0.8+UR*0.2, c2.scale, 0.6)
+        self.play(persons[3].move_to, DOWN - 5*LEFT + UL*1.3)
+        self.play(persons[4].move_to, DOWN - 5*LEFT + UR*1.3)
+        self.play(persons[6].move_to, DOWN - 5*LEFT + 1.5*DOWN)
+        c3 = Circle(radius=5, color=GREEN)
+        self.play(c3.move_to, DOWN - 5*LEFT, c3.scale, 0.6)
+        self.wait()
+
+        # 多个解
+        self.swap(persons[0], persons[6])
+        self.wait()
+        self.swap(persons[2], persons[3])
+        self.wait()
+        self.swap(persons[1], persons[0])
+        self.wait()
+
+    def create_persons(self, groupsize):
+        persons = []
+        for idx, gs in enumerate(groupsize):
+            p = create_peole(idx)
+            persons.append(p)
+            p.move_to(UP*4)
+            self.play(p.move_to, 2 * LEFT * (3 - idx)+0.3*RIGHT)
+        self.wait()
+
+        # 标号闪烁
+        #for idx, gs in enumerate(groupsize):
+        anims = [[persons[idx][1].shift, DOWN] for idx, gs in enumerate(groupsize)]
+        self.play(*[x for anim in anims for x in anim])
+        anims = [[persons[idx][1].set_color, GREEN] for idx, gs in enumerate(groupsize)]
+        self.play(*[x for anim in anims for x in anim])
+        anims = [[persons[idx][1].set_color, BLUE] for idx, gs in enumerate(groupsize)]
+        self.play(*[x for anim in anims for x in anim])
+        anims = [[persons[idx][1].set_color, YELLOW] for idx, gs in enumerate(groupsize)]
+        self.play(*[x for anim in anims for x in anim])
+        anims = [[persons[idx][1].set_color, RED] for idx, gs in enumerate(groupsize)]
+        self.play(*[x for anim in anims for x in anim])
+        anims = [[persons[idx][1].shift, UP] for idx, gs in enumerate(groupsize)]
+        self.play(*[x for anim in anims for x in anim])
+        self.wait()
+
+        # 整体上移
+        anims = [[persons[idx].shift, UP*2.0] for idx, gs in enumerate(groupsize)]
+        self.play(*[x for anim in anims for x in anim])
+        self.wait()
+
+        # 创建群大小
+        for idx, gs in enumerate(groupsize):
+            size = TextMobject(str(gs), color=BLUE)
+            size.move_to(persons[idx].get_center())
+            self.play(size.move_to, persons[idx].get_center() + 1.5*UP)
+            persons[idx].add(size)
+        self.wait()
+
+        return persons
+
+    def swap(self, obj1, obj2):
+        pos1 = obj1.get_center()
+        pos2 = obj2.get_center()
+        self.play(obj1.move_to, pos2, obj2.move_to, pos1)
+
+class Solution(Problem):
+    """用于生成解决方案描述动画
+    """
+    def construct(self):
+        groupsize = [3,3,3,3,3,1,3]
+        # 创建人员
+        persons = self.create_persons(groupsize)
+        # 创建索引框
+        self.rect = Rectangle(width=2, height=3, color=YELLOW)
+        self.index(persons[0])
+        self.wait()
+
+        # 创建第一个群
+        self.play(persons[0].move_to, 5*LEFT + DOWN)
+        c1 = Circle(radius=5, color=RED)
+        self.play(c1.move_to, LEFT*4+1.5*DOWN, c1.scale, 0.6)
+        cap = TextMobject('3人群', color=RED)
+        self.play(FadeIn(cap), cap.move_to, c1.get_center()+DL*2)
+
+        # 安排第2个人
+        self.index(persons[1])
+        self.play(persons[1].move_to, persons[0].get_center()+UR*2+DOWN)
+
+        # 安排第3个人
+        self.index(persons[2])
+        self.play(persons[2].move_to, persons[0].get_center()+DR*2+0.2*UP)
+
+        # 安排第4个人
+        self.index(persons[3])
+        self.play(persons[3].move_to, DOWN)
+        c2 = Circle(radius=5, color=GREEN)
+        self.play(c2.move_to, DOWN + RIGHT, c2.scale, 0.6)
+        cap = TextMobject('3人群', color=GREEN)
+        self.play(FadeIn(cap), cap.move_to, c2.get_center()+DL*2+RIGHT)
+
+        # 安排第5个人
+        self.index(persons[4])
+        self.play(persons[4].move_to, persons[3].get_center() + UR*2+DOWN)
+
+        # 安排第6个人
+        self.index(persons[5])
+        self.play(persons[5].move_to, DOWN+RIGHT*5.5)
+        c3 = Circle(radius=5, color=PINK)
+        self.play(c3.move_to, persons[5].get_center() + LEFT*0.2, c3.scale, 0.3)
+        cap = TextMobject('1人群', color=PINK)
+        self.play(FadeIn(cap), cap.move_to, c3.get_center()+2*DOWN)
+
+        # 安排第7个人
+        self.index(persons[6])
+        self.play(persons[6].move_to, persons[3].get_center() + DR*2+UP*0.5)
+
+        # 去除索引框
+        self.play(FadeOut(self.rect))
+
+        self.clear()
+        self.wait()
+        cap = TextMobject(r'$T = O(n^2)$')
+        self.play(ShowCreation(cap), cap.scale, 2)
+
+    def index(self, person):
+        self.play(self.rect.move_to, person.get_center() + 0.3*LEFT)
+
+
+class SolutionOpt(Solution):
+
+    def construct(self):
+        groupsize = [3,3,3,3,3,1,3]
+        # 创建人员
+        persons = self.create_persons(groupsize)
+        # 创建索引框
+        self.rect = Rectangle(width=2, height=3, color=YELLOW)
+        self.index(persons[0])
+        self.wait()
+
+        # 找出要求3人群的人员
+        cap = TextMobject('3人群', color=RED)
+        self.play(cap.move_to, LEFT*3 + DOWN*2)
+        c1 = Circle(radius=1, color=RED)
+        self.play(c1.move_to, cap.get_center())
+        arrow0 = Arrow(c1.get_center()+UL*0.5, persons[0].get_center()+DOWN)
+        self.play(ShowCreation(arrow0))
+        self.wait()
+
+        # 第2个人员
+        self.index(persons[1])
+        arrow1 = Arrow(c1.get_center()+UL*0.5, persons[1].get_center()+DOWN)
+        self.play(ShowCreation(arrow1))
+
+        # 第3个人员
+        self.index(persons[2])
+        arrow2 = Arrow(c1.get_center()+UL*0.5, persons[2].get_center()+DOWN)
+        self.play(ShowCreation(arrow2))
+
+        # 第4个人员
+        self.index(persons[3])
+        arrow3 = Arrow(c1.get_center()+UL*0.5, persons[3].get_center()+DOWN)
+        self.play(ShowCreation(arrow3))
+
+        # 第5个人员
+        self.index(persons[4])
+        arrow4 = Arrow(c1.get_center()+UL*0.5, persons[4].get_center()+DOWN)
+        self.play(ShowCreation(arrow4))
+        self.wait()
+
+        # 第6个人员
+        self.index(persons[5])
+        self.play(persons[5].move_to, DOWN*2.5+RIGHT*5)
+        cap = TextMobject('1人群', color=PINK)
+        self.play(cap.move_to, DOWN*3)
+        c2 = Circle(radius=1, color=PINK)
+        self.play(c2.move_to, cap.get_center())
+        arrow5 = Arrow(c2.get_center()+0.5*RIGHT, persons[5].get_center()+0.5*LEFT)
+        self.play(ShowCreation(arrow5))
+        self.wait()
+
+        # 第7个人员
+        self.index(persons[6])
+        arrow6 = Arrow(c1.get_center()+UL*0.5, persons[6].get_center()+DOWN)
+        self.play(ShowCreation(arrow6))
+        self.wait()
+
+        # 移除索引框
+        self.play(FadeOut(self.rect))
+        
+        # 第一个3人群
+        r1 = Rectangle(width=6, height=3, color=RED)
+        self.play(r1.move_to, persons[1].get_center()+0.3*LEFT)
+        cap = TextMobject('第一个3人群', color=RED)
+        self.play(ShowCreation(cap), cap.move_to, r1.get_center())
+        self.wait()
+
+        # 第二个3人群
+        r2 = Rectangle(width=7.5, height=3, color=RED)
+        self.play(r2.move_to, persons[4].get_center() + RIGHT)
+        cap = TextMobject('第二个3人群', color=RED)
+        self.play(ShowCreation(cap), cap.move_to, r2.get_center())
+        self.wait()
+
+        # 第一个1人群
+        r3 = Rectangle(width=2, height=3, color=PINK)
+        self.play(r3.move_to, persons[5].get_center()+0.3*LEFT)
+        cap = TextMobject('第一个1人群', color=PINK)
+        self.play(ShowCreation(cap), cap.move_to, r3.get_center()+2*UP)
+        self.wait()
+
+        # 去除索引框
+        self.play(FadeOut(self.rect))
+
+        self.clear()
+        self.wait()
+        cap = TextMobject(r'$T = O(nlog(n))$')
+        self.play(ShowCreation(cap), cap.scale, 2)
+
+
+
+
+
