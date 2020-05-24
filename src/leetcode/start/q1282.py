@@ -527,7 +527,72 @@ class SolutionOpt(Solution):
         cap = TextMobject(r'$T = O(nlog(n))$')
         self.play(ShowCreation(cap), cap.scale, 2)
 
+class Tail(Scene):
+    CONFIG={
+		"camera_config": {
+			"background_color": "#ffffff",
+		},
+	}
 
+    def construct(self):
+        wechat = ImageMobject('assets/leetcode/start/wechat.png')
+        xigua = ImageMobject('assets/leetcode/start/xigua.png')
+        bili = ImageMobject('assets/leetcode/start/bilibili.png')
+        youtube = ImageMobject('assets/leetcode/start/youtube.png')
+        wechat.move_to(4*UP)
+        xigua.move_to(4*UP)
+        bili.move_to(4*UP)
+        
+        text = self.make_title()
+        self.play(wechat.move_to, 3*LEFT+UP, 
+                  xigua.move_to, ORIGIN+UP,
+                  bili.move_to, 3*RIGHT+UP, run_time=1)
 
+        self.make_slogan(text)
+        self.wait()
+
+    def make_title(self):
+        text = TextMobject(r'青衣', r'极客', r'频道', r'视频发布平台', color=BLACK)
+        text.move_to(4*UP)
+        self.play(ShowCreation(text), text.move_to, 3*UP, run_time=1)
+        self.play(text[0].shift, 0.5*LEFT, text[1].shift, 0.5*LEFT, run_time=0.5)
+        self.play(text[0].set_color, BLUE, text[1].set_color, GREEN, run_time=0.5)
+        self.play(text[:2].scale, 1.3, run_time=0.5)
+        return text
+
+    def make_slogan(self, text):
+        slogan = TextMobject(r'一个', r'“有用”', r'的频道', color=BLACK)
+        slogan.move_to(DOWN*1.5+2*RIGHT)
+        slogan.rotate(8*DEGREES)
+        self.play(ShowCreation(slogan))
+        self.play(text[:2].copy().move_to, 1.7*DOWN + 2*LEFT, run_time=0.5)
+        self.play(slogan[1].set_color, RED, run_time=0.5)
+
+class Tail2(Tail):
+    CONFIG={
+		"camera_config": {
+			"background_color": "#ffffff",
+		},
+	}
+
+    def construct(self):
+        wechat = ImageMobject('assets/leetcode/start/wechat.png')
+        xigua = ImageMobject('assets/leetcode/start/xigua.png')
+        bili = ImageMobject('assets/leetcode/start/bilibili.png')
+        youtube = ImageMobject('assets/leetcode/start/youtube.png')
+        wechat.move_to(4*UP)
+        xigua.move_to(4*UP)
+        bili.move_to(4*UP)
+        youtube.move_to(4*UP)
+
+        text = self.make_title()
+
+        self.play(wechat.move_to, 4*LEFT+UP, 
+                  xigua.move_to, 1.33*LEFT+UP,
+                  bili.move_to, 1.33*RIGHT+UP,
+                  youtube.move_to, 4*RIGHT+UP)
+
+        self.make_slogan(text)
+        self.wait()
 
 
