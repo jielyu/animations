@@ -12,7 +12,7 @@ to manager python code of making animations for leetcode problems and solutions.
 
 使用sphinx创建文档的步骤如下，所有文档操作在docs目录下进行
 
-### 1. sphinx操作
+### A. sphinx操作
 
 (1) 生成文档工程
 
@@ -59,7 +59,7 @@ cd build/latex
 make
 ```
 
-### 2. 添加扩展
+### B. 添加扩展
 
 修改conf.py中变量如下：
 
@@ -74,7 +74,7 @@ extensions = ['sphinx.ext.autodoc',
 ]
 ```
 
-### 3. 更换默认html主题
+### C. 更换默认html主题
 
 修改conf.py中变量如下：
 
@@ -86,7 +86,7 @@ extensions = ['sphinx.ext.autodoc',
 html_theme = 'sphinx_rtd_theme'
 ```
 
-### 4. 更换语言
+### D. 更换语言
 
 设置语言为中文，修改conf.py文件如下：
 
@@ -94,7 +94,7 @@ html_theme = 'sphinx_rtd_theme'
 language = 'zh_CN'
 ```
 
-### 5. 生成latex
+### E. 生成latex
 
 添加conf.py中的变量如下：
 
