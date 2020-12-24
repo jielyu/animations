@@ -3,7 +3,7 @@ XX=manim
 ARGS=-pl
 #ARGS=-t --high_quality
 
-all: q1262 q1267 q1282
+all: q1262 q1267 q1282 manim_demo test
 	@echo "create all animations completely"
 
 # For Problem 1262 in Leetcode
@@ -65,6 +65,71 @@ coordinate:
 animation_file="src/manim_demo/basic/animation.py"
 animation:
 	manim ${animation_file} EffectDemo ${ARGS}
+
+# For s01_think
+
+# command for perception animations
+perceptron_file=src/s01_thinking/perceptron.py
+perceptron:
+	${XX} ${perceptron_file} Perceptron ${ARGS}
+perceptron_ps:
+	${XX} ${perceptron_file} PerceptronParamSpace ${ARGS}
+
+test: testanim testcamera testmobject test_scene
+	@echo "create all tests completely"
+
+# command for animation test
+anim_file=src/test/test_animation.py
+testanim:
+	${XX} ${anim_file}  TransformExample ${ARGS}
+
+# command for camera test
+camera_file=src/test/test_camera.py
+testcamera:
+	${XX} ${camera_file} CameraExample ${ARGS}
+
+# command for mobject test
+mobj_file=src/test/test_mobject.py
+testmobject: testmobj_text testmobj_position testmobj_sizetext \
+                 testmobj_textarray testmobj_vgroup testmobj_shape testmobj_shape3d
+testmobj_text:
+	${XX} ${mobj_file} TextExample ${ARGS}
+testmobj_position:
+	${XX} ${mobj_file} PositionExample ${ARGS}
+testmobj_sizetext:
+	${XX} ${mobj_file} SizeTextExample ${ARGS}
+testmobj_textarray:
+	${XX} ${mobj_file} TextArrayExample ${ARGS}
+testmobj_vgroup:
+	${XX} ${mobj_file} VGroupExample ${ARGS}
+testmobj_shape:
+	${XX} ${mobj_file} ShapeExample ${ARGS}
+testmobj_shape3d:
+	${XX} ${mobj_file} Shape3DExample ${ARGS}
+
+# command for scene test
+scene_file=src/test/test_scene.py
+test_scene: test_graph2d test_scene3d test_movingcamerascene \
+            test_samplespacescene test_zoomedscene test_ltscene \
+			test_configscene test_updatescene test_coorscene
+test_graph2d:
+	${XX} ${scene_file} Graph2DExample ${ARGS}
+test_scene3d:
+	${XX} ${scene_file} ThreeDExample ${ARGS}
+test_movingcamerascene:
+	${XX} ${scene_file} MovingCameraExample ${ARGS}
+test_samplespacescene:
+	${XX} ${scene_file} SampleSpaceExample ${ARGS}
+test_zoomedscene:
+	${XX} ${scene_file} ZoomedExample ${ARGS}
+test_ltscene:
+	${XX} ${scene_file} VectorExample ${ARGS}
+test_configscene:
+	${XX} ${scene_file} ConfigSceneExample ${ARGS}
+test_updatescene:
+	${XX} ${scene_file} UpdateExample ${ARGS}
+test_coorscene:
+	${XX} ${scene_file} CoorExample ${ARGS}
 
 # clean all output
 clean:
