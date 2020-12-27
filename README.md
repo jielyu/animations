@@ -1,6 +1,6 @@
-# leetcode-animate
+# animations
 
-to manager python code of making animations for leetcode problems and solutions. 
+to manager python code for making animations
 
 ## 1. LeetCode
 
