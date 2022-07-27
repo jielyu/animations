@@ -1,1 +1,2 @@
-manim
+# 必须使用社区版manim
+manim>=0.16.0
