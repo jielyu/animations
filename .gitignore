@@ -1,6 +1,6 @@
 .DS_Store
 output/
-!output/.gitkeep
+media/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

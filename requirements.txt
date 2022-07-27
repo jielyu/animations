@@ -1,6 +1,1 @@
-manimlib
-sphinx
-sphinx_rtd_theme
-tensorflow>=2.0.0
-numpy>=1.16.4
-matplotlib>=3.0.3
+manim
