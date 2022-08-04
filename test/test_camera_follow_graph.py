@@ -25,3 +25,10 @@ class FollowingGraphCamera(MovingCameraScene):
         self.camera.frame.remove_updater(update_curve)
 
         self.play(Restore(self.camera.frame))
+
+        sin_label = ax.get_graph_label(
+            graph, "\\sin(x)", x_val=5, direction=UP / 2, buff=5
+        )
+        sin_label.scale(2)
+        self.play(Write(sin_label))
+        self.wait()
