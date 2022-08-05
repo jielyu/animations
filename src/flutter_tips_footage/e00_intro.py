@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 from manim import *
-from sympy import substitution
 
 
 class E00IntroOpening(Scene):
